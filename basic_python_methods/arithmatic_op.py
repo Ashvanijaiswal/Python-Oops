@@ -1,0 +1,10 @@
+import math
+a=int(input("Enter value for a:"))
+b=int(input("Enter value for b:"))
+print("Sum of a and b:",a+b)
+print("Diff pf a and b is:",a-b)
+print("Product of a and b:",a*b)
+print("Quitent when a is diveded by b:",a//b)
+print("Reminder when a is divided by b:",a%b)
+print("log base 10:",math.log10(a))
+print("a power of b:",pow(a,b))

@@ -1,0 +1,11 @@
+datalake,
+nifi, datalake,,
+azure, nifi, datalake,
+oracle, azure, nifi, datalake,
+shell_scripting, azure, nifi, datalake,
+powerBi, shell_scripting, azure, nifi, datalake,
+scala, powerbI, shell_scripting, azure, nifi, datalake,
+snowflake, scala, powerBI, shell_scripting, azure, nifi, datalake,
+ingestion_framwork, snowflake, scala, powerBI, shell_scripting, azure, nifi, datalake,
+jenkins, ingestion_framwork, snowflake, scala, powerBI, shell_scripting, azure, nifi, datalake,
+spark,  jenkins, ingestion_framwork, snowflake, scala, powerBI, shell_scripting, azure, nifi, datalake

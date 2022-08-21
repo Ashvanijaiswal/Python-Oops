@@ -1,0 +1,4 @@
+name,id,dept
+ashvani,10,dev
+siddiq,19,specialist
+sandesh,20,consultant

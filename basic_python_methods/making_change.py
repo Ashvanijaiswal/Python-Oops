@@ -1,0 +1,41 @@
+num_of_cents=int(input("Enter num of cents to change:"))
+nick=5
+dime=10
+quat=25
+loonie=100
+toonie=200
+penny=1
+ni,di,qu,loo,too,pen=[],[],[],[],[],[]
+
+while(num_of_cents>0):
+    if(num_of_cents>=200):
+        n=num_of_cents//toonie
+        num_of_cents=num_of_cents%toonie
+        print(num_of_cents)
+        too.append(n)
+    elif(100<=num_of_cents<200):
+        n=num_of_cents//loonie
+        num_of_cents=num_of_cents%loonie
+        loo.append(n)
+        print(num_of_cents)
+    elif(25<=num_of_cents<100):
+        n=num_of_cents//quat
+        num_of_cents=num_of_cents%quat
+        qu.append(n)
+        print(num_of_cents)
+    elif(10<=num_of_cents<25):
+        n=num_of_cents//dime
+        num_of_cents=num_of_cents%dime
+        di.append(n)
+        print(num_of_cents)
+    elif(5<=num_of_cents<10):
+        n=num_of_cents//nick
+        num_of_cents=num_of_cents%nick
+        ni.append(n)
+        print(num_of_cents)
+    else:
+        pen.append(num_of_cents)
+        print(num_of_cents)
+        break
+
+print(sum(too),'toonies',',',sum(loo),'loonies,',sum(qu),'quaters,',sum(di),'dimes,',sum(ni),'nicks,',num_of_cents,'pennies')
