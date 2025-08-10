@@ -1,0 +1,54 @@
+{
+   "InvoiceNumber":"27080561",
+   "CreatedTime":1595689030008,
+   "StoreID":"STR6347",
+   "PosID":"POS622",
+   "CashierID":"OAS793",
+   "CustomerType":"PRIME",
+   "CustomerCardNo":"5697125813",
+   "TotalAmount":9396.0,
+   "NumberOfItems":4,
+   "PaymentMethod":"CARD",
+   "TaxableAmount":9396.0,
+   "CGST":234.9,
+   "SGST":234.9,
+   "CESS":11.745000000000001,
+   "DeliveryType":"HOME-DELIVERY",
+   "DeliveryAddress":{
+      "AddressLine":"295-7690 At Street",
+      "City":"Shahjahanpur",
+      "State":"Uttar Pradesh",
+      "PinCode":"228410",
+      "ContactNumber":"4624129756"
+   },
+   "InvoiceLineItems":[
+      {
+         "ItemCode":"593",
+         "ItemDescription":"Hanging curtains",
+         "ItemPrice":1896.0,
+         "ItemQty":2,
+         "TotalValue":3792.0
+      },
+      {
+         "ItemCode":"423",
+         "ItemDescription":"Quilt",
+         "ItemPrice":1485.0,
+         "ItemQty":1,
+         "TotalValue":1485.0
+      },
+      {
+         "ItemCode":"318",
+         "ItemDescription":"Bofinger chair",
+         "ItemPrice":1119.0,
+         "ItemQty":1,
+         "TotalValue":1119.0
+      },
+      {
+         "ItemCode":"548",
+         "ItemDescription":"Cartel clock",
+         "ItemPrice":1500.0,
+         "ItemQty":2,
+         "TotalValue":3000.0
+      }
+   ]
+}

@@ -1,0 +1,32 @@
+{
+  "workflows": [
+    {
+      "workflowCode": "INGEST-FRAMEWORK",
+      "workflowSubType": "Hard-data-deletion"
+    }
+  ],
+  "datasources": [
+    {
+      "dataSourceName": "DS-Hard-data-deletion",
+      "workflowId": "{workflowId-0}"
+    },
+    {
+      "dataSourceName": "DS-Hard-data-deletion",
+      "workflowId": "{workflowId-0}"
+    }
+  ],
+  "filetemplates": [
+    {
+      "dataSourceId": "{dataSourceId-0}",
+      "templateName": "xyz"
+    },
+    {
+      "dataSourceId": "{dataSourceId-1}",
+      "templateName": "abc"
+    },
+    {
+      "dataSourceId": "{dataSourceId-0}",
+      "templateName": "pqr"
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+from pyspark.sql.functions import *
+from pyspark.sql.types import *
+from pyspark.sql import Window, SparkSession
+
+spark = SparkSession.builder \
+    .appName("MyApp") \
+    .master("local[*]") \
+    .config("spark.driver.port", "4040") \
+    .config("spark.driver.bindAddress", "127.0.0.1") \
+    .config("spark.driver.host", "127.0.0.1") \
+    .config("spark.blockManager.port", "6060")\
+    .getOrCreate()
+
+data=[('a1',1),
+('a2',1),
+('a3',0),
+('a4',0),
+('a5',0),
+('a6',0),
+('a7',1),
+('a8',1),
+('a9',0),
+('a10',0),
+('b1',0),
+('b2',0),
+('b3',0),
+('b4',1),
+('b5',1),
+('b6',1),
+('b7',1),
+('b8',0),
+('b9',0),
+('b10',0),
+('c1',0),
+('c2',1),
+('c3',0),
+('c4',1),
+('c5',1),
+('c6',0),
+('c7',1),
+('c8',0),
+('c9',0),
+('c10',1)]
+
+schema=StructType([StructField('seat_no',StringType(),False),
+                   StructField("status", IntegerType(),False)])
+
+df=spark.createDataFrame(data,schema)
+
+df.withColumn("row", col("seat_no").substr(1,1)).\
+    withColumn("col", col("seat_no").substr(2,10).cast(IntegerType())).where("status=0").\
+    withColumn("rn",row_number().over(Window.partitionBy("row").orderBy("col"))).\
+    withColumn("diff",col("col")-col("rn")).groupby("row","diff").agg(min("col"), max("col")).show()
+
+
+spark.stop()
