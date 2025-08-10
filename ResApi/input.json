@@ -2,7 +2,7 @@
   "workflows": [
     {
       "workflowCode": "INGEST-FRAMEWORK",
-      "workflowSubType": "Hard-data-deletion"
+      "workflowSubTypeCode": "Hard-data-deletion"
     }
   ],
   "datasources": [

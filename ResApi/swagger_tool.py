@@ -2,8 +2,22 @@ import json
 import requests
 
 BASE_URL = "http://localhost:8080/api/"
+AUTH_URL = "https://<server:port>/authservice/oath/token?grant_type=client_credentials"
+AUTH_HEADER = {"Authorization": "Basic <HashValue>"}
 ID_STORE = {}
+ENTITY_MAP = {
+    "workflows":      ("workflows/save", "workflowId"),
+    "datasources":    ("datasources/save", "dataSourceId"),
+    "filetemplates":  ("filetemplates/save", "fileTemplateId"),
+    "datasourceflds":  ("datasourceflds/save", "dataSourceFldId"),
+    "destinationtables": ("destinationtables/save", "destinationTableId")
+    # Add more mappings as needed
+}
 
+def get_bearer_token():
+    resp = requests.post(AUTH_URL, headers=AUTH_HEADER, verify=False)
+    resp.raise_for_status()
+    return resp.json()["access_token"]
 
 def replace_placeholders(obj):
     """Recursively replace placeholders in a dictionary or list."""
@@ -17,40 +31,28 @@ def replace_placeholders(obj):
     else:
         return obj
 
-def call_api(endpoint, payload, id_key, store_key_pattern):
-    """Send POST request and store generated ID."""
+def call_api(endpoint, payload, id_key, store_key_pattern, token):
     url = BASE_URL + endpoint
-    resp = requests.post(url, json=payload, verify=False)  # verify=False for self-signed certs
+    headers = {"Authorization": f"Bearer {token}"}
+    resp = requests.post(url, json=payload, headers=headers, verify=False)
     resp.raise_for_status()
     data = resp.json()
     generated_id = data.get(id_key)
-
-    if isinstance(payload, list):
-        for i, item in enumerate(payload):
-            ID_STORE[store_key_pattern.format(i)] = generated_id if len(payload) == 1 else data[i][id_key]
-    else:
-        ID_STORE[store_key_pattern] = generated_id
-
+    ID_STORE[store_key_pattern] = generated_id
     print(f"Stored IDs: {ID_STORE}")
 
+
 def main():
+    token = get_bearer_token()
     with open("input.json") as f:
         config = json.load(f)
 
-    # Step 1: workflows (insert one by one)
-    workflows = replace_placeholders(config["workflows"])
-    for i, workflow in enumerate(workflows):
-        call_api("workflows/save", workflow, "workflowId", f"workflowId-{i}")
-
-    # Step 2: datasources (replace placeholders after workflows)
-    datasources = replace_placeholders(config["datasources"])
-    for i, datasource in enumerate(datasources):
-        call_api("datasources/save", datasource, "dataSourceId", f"dataSourceId-{i}")
-
-    # Step 3: filetemplates (replace placeholders after datasources)
-    filetemplates = replace_placeholders(config["filetemplates"])
-    for i, filetemplate in enumerate(filetemplates):
-        call_api("filetemplates/save", filetemplate, "fileTemplateId", f"fileTemplateId-{i}")
+    for key in config:
+        if key in ENTITY_MAP:
+            endpoint, id_key = ENTITY_MAP[key]
+            items = replace_placeholders(config[key])
+            for i, item in enumerate(items):
+                call_api(endpoint, item, id_key, f"{id_key}-{i}",token)
 
 if __name__ == "__main__":
     main()
